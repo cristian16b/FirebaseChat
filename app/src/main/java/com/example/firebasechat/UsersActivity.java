@@ -1,10 +1,11 @@
 package com.example.firebasechat;
 
 import android.os.Bundle;
-import android.support.wearable.activity.WearableActivity;
 import android.widget.TextView;
 
-public class UsersActivity extends WearableActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class UsersActivity extends AppCompatActivity {
 
     private TextView mTextView;
 
@@ -15,7 +16,5 @@ public class UsersActivity extends WearableActivity {
 
         mTextView = (TextView) findViewById(R.id.text);
 
-        // Enables Always-on
-        setAmbientEnabled();
     }
 }
