@@ -5,17 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="50dp"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:text="Ingresar" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:paddingTop="50dp"
+        android:layout_below="@id/textView2"
+        android:textSize="30dp"
         android:layout_centerVertical="true" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
