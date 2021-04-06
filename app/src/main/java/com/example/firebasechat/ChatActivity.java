@@ -1,5 +1,6 @@
 package com.example.firebasechat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity{
 
     private TextView mTextView;
 
@@ -31,6 +32,24 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // Start sign in/sign up activity
+            Intent i = new Intent(this, LoginActivity.class );
+            startActivity(i);
+        } else {
+            // User is already signed in. Therefore, display
+            // a welcome Toast
+            Toast.makeText(this,
+                    "Bienvenido " + FirebaseAuth.getInstance()
+                            .getCurrentUser()
+                            .getDisplayName(),
+                    Toast.LENGTH_LONG)
+                    .show();
+
+            // Load chat room contents
+            displayChatMessages();
+        }
 
         mTextView = (TextView) findViewById(R.id.text);
 
@@ -60,12 +79,12 @@ public class ChatActivity extends AppCompatActivity {
     protected void displayChatMessages() {
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("mensajes");
+        Query query = FirebaseDatabase.getInstance().getReference().child("MXcks9W9ysi5atfbsUd");
 
         FirebaseListOptions<ChatMessage> options =
                 new FirebaseListOptions.Builder<ChatMessage>()
                         .setQuery(query, ChatMessage.class)
-                        .setLayout(android.R.layout.simple_list_item_1)
+                        .setLayout(R.layout.message)
                         .build();
         adapter = new FirebaseListAdapter<ChatMessage>(options)
 
