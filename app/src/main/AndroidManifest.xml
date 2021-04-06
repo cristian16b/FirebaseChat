@@ -14,14 +14,6 @@
             android:name=".ChatActivity">
 
         </activity>
-        <activity
-            android:name=".RegisterActivity">
-
-        </activity>
-        <activity
-            android:name=".UsersActivity">
-
-        </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
