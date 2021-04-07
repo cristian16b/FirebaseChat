@@ -103,6 +103,8 @@ public class ChatActivity extends AppCompatActivity{
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 ChatMessage mensaje = dataSnapshot.getValue(ChatMessage.class);
+                arrayList.add(mensaje.toString());
+                adapter.notifyDataSetChanged();
 //                mensaje.setMessageText();
 
                 int taglog = Log.d("TAGLOG", mensaje.toString() + "");
@@ -130,46 +132,5 @@ public class ChatActivity extends AppCompatActivity{
         };
 
         db.addChildEventListener(childEventListener);
-/*        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-
-        Query query = FirebaseDatabase.getInstance().getReference();
-        Log.i("mensaje", "entro");
-        FirebaseListOptions<ChatMessage> options =
-                new FirebaseListOptions.Builder<ChatMessage>()
-                        .setQuery(query, ChatMessage.class)
-                        .setLayout(R.layout.activity_chat)
-                        .build();
-        Log.i("mensaje",options.toString());
-         adapter = new FirebaseListAdapter<ChatMessage>(options)
-
-
-        *//*adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message,FirebaseDatabase.getInstance().getReference())
-        *//*
-        {
-            @Override
-            protected void populateView(@NonNull View v, @NonNull ChatMessage model, int position) {
-                Log.i("pos", String.valueOf(position));
-                // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-
-                // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                        model.getMessageTime()));
-
-                Log.i("mensaje",model.getMessageText());
-
-            }
-
-        };
-
-        listOfMessages.setAdapter(adapter);
-        Log.i("mensaje",listOfMessages.getCount() + "");*/
     }
 }

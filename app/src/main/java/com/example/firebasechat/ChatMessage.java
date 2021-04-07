@@ -52,14 +52,13 @@ public class ChatMessage {
         this.messageTime = messageTime;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public String toString() {
         return this.messageUser + " " + convertTime(this.messageTime) + " " + this.messageText;
     }
 
     public String convertTime(long time){
         Date date = new Date(time);
-        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return format.format(date);
     }
 }
