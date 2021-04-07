@@ -2,7 +2,6 @@ package com.example.firebasechat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,29 +11,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChatActivity extends AppCompatActivity{
 
     private TextView mTextView;
-
-    //private FirebaseListAdapter adapter;
-
-    //private ListView lv1;
 
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList =new ArrayList<>();
@@ -132,5 +122,12 @@ public class ChatActivity extends AppCompatActivity{
         };
 
         db.addChildEventListener(childEventListener);
+    }
+
+    public void logOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent i = new Intent(this, LoginActivity.class );
+        startActivity(i);
+        // Sign Out Google...
     }
 }

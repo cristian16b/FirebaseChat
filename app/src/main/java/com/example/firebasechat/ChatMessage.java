@@ -53,7 +53,7 @@ public class ChatMessage {
     }
 
     public String toString() {
-        return this.messageUser + " " + convertTime(this.messageTime) + " " + this.messageText;
+        return this.messageUser + " - " + convertTime(this.messageTime) + "Hs" + "\n" + this.messageText;
     }
 
     public String convertTime(long time){

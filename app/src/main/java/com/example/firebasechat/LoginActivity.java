@@ -153,29 +153,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R., menu);
-        return true;
-    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_sign_out) {
-            AuthUI.getInstance().signOut(this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(LoginActivity.this,
-                                    "You have been signed out.",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
-                            // Close activity
-                            finish();
-                        }
-                    });
-        }
-        return true;
-    }*/
+    public void onBackPressed() {
+        // NO HACER NADA
+    }
 }
