@@ -32,10 +32,12 @@ public class ChatActivity extends AppCompatActivity{
 
     private TextView mTextView;
 
-    private FirebaseListAdapter adapter;
+    //private FirebaseListAdapter adapter;
 
-    private ListView lv1;
+    //private ListView lv1;
 
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> arrayList =new ArrayList<>();
 
 
     @Override
@@ -92,12 +94,18 @@ public class ChatActivity extends AppCompatActivity{
         DatabaseReference db =
                 FirebaseDatabase.getInstance().getReference();
 
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
+        listOfMessages.setAdapter(adapter);
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d("TAGLOG", "onChildAdded: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+                ChatMessage mensaje = dataSnapshot.getValue(ChatMessage.class);
+//                mensaje.setMessageText();
+
+                int taglog = Log.d("TAGLOG", mensaje.toString() + "");
             }
 
             @Override

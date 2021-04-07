@@ -1,5 +1,13 @@
 package com.example.firebasechat;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ChatMessage {
@@ -42,5 +50,16 @@ public class ChatMessage {
 
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String toString() {
+        return this.messageUser + " " + convertTime(this.messageTime) + " " + this.messageText;
+    }
+
+    public String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        return format.format(date);
     }
 }
