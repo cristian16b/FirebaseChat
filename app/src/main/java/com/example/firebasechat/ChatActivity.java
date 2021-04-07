@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,14 +18,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends AppCompatActivity{
 
     private TextView mTextView;
 
     private FirebaseListAdapter adapter;
+
+    private ListView lv1;
 
 
 
@@ -74,24 +84,60 @@ public class ChatActivity extends AppCompatActivity{
                 input.setText("");
             }
         });
+
+
     }
 
     protected void displayChatMessages() {
+        DatabaseReference db =
+                FirebaseDatabase.getInstance().getReference();
+
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("MXcks9W9ysi5atfbsUd");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("TAGLOG", "onChildAdded: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("TAGLOG","onChildChanged: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d("TAGLOG", "onChildRemoved: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("TAGLOG", "onChildMoved: " + dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("TAGLOG","Error!", databaseError.toException());
+            }
+        };
+
+        db.addChildEventListener(childEventListener);
+/*        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
+
+        Query query = FirebaseDatabase.getInstance().getReference();
+        Log.i("mensaje", "entro");
         FirebaseListOptions<ChatMessage> options =
                 new FirebaseListOptions.Builder<ChatMessage>()
                         .setQuery(query, ChatMessage.class)
-                        .setLayout(R.layout.message)
+                        .setLayout(R.layout.activity_chat)
                         .build();
-        adapter = new FirebaseListAdapter<ChatMessage>(options)
+        Log.i("mensaje",options.toString());
+         adapter = new FirebaseListAdapter<ChatMessage>(options)
 
 
-        /*adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
+        *//*adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
                 R.layout.message,FirebaseDatabase.getInstance().getReference())
-        */
+        *//*
         {
             @Override
             protected void populateView(@NonNull View v, @NonNull ChatMessage model, int position) {
@@ -108,10 +154,14 @@ public class ChatActivity extends AppCompatActivity{
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                         model.getMessageTime()));
+
+                Log.i("mensaje",model.getMessageText());
+
             }
 
         };
 
         listOfMessages.setAdapter(adapter);
+        Log.i("mensaje",listOfMessages.getCount() + "");*/
     }
 }
