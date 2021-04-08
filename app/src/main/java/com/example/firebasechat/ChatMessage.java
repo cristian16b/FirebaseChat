@@ -48,6 +48,8 @@ public class ChatMessage {
         return messageTime;
     }
 
+    public String getMessageTimeString() { return convertTime(messageTime); }
+
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
     }

@@ -27,7 +27,7 @@ public class ChatActivity extends AppCompatActivity{
     private TextView mTextView;
 
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> arrayList =new ArrayList<>();
+    private ArrayList<ChatMessage> arrayList =new ArrayList<>();
 
 
     @Override
@@ -84,17 +84,19 @@ public class ChatActivity extends AppCompatActivity{
         DatabaseReference db =
                 FirebaseDatabase.getInstance().getReference();
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-
+//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+//
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-        listOfMessages.setAdapter(adapter);
+//        listOfMessages.setAdapter(adapter);
+
+        listOfMessages.setAdapter(new ChatAdapter(this,arrayList));
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 ChatMessage mensaje = dataSnapshot.getValue(ChatMessage.class);
-                arrayList.add(mensaje.toString());
-                adapter.notifyDataSetChanged();
+                arrayList.add(mensaje);
+//                adapter.notifyDataSetChanged();
 //                mensaje.setMessageText();
 
                 int taglog = Log.d("TAGLOG", mensaje.toString() + "");
