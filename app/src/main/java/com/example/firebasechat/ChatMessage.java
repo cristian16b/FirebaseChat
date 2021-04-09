@@ -15,6 +15,7 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private long messageTime;
+    private String messageUserId;
 
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
@@ -27,6 +28,15 @@ public class ChatMessage {
     public ChatMessage(){
 
     }
+
+    public String getMessageUserId() {
+        return messageUserId;
+    }
+
+    public void setMessageUserId(String messageUserId) {
+        this.messageUserId = messageUserId;
+    }
+
 
     public String getMessageText() {
         return messageText;
@@ -49,6 +59,8 @@ public class ChatMessage {
     }
 
     public String getMessageTimeString() { return convertTime(messageTime); }
+
+    public String setMessageTimeString() { return convertTime(messageTime); }
 
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
