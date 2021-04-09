@@ -27,7 +27,7 @@ public class ChatActivity extends AppCompatActivity{
 
     private TextView mTextView;
 
-    private ArrayAdapter<String> adapter;
+    private ChatAdapter adapter;
     private ArrayList<ChatMessage> arrayList =new ArrayList<>();
 
 
@@ -63,18 +63,26 @@ public class ChatActivity extends AppCompatActivity{
             public void onClick(View view) {
                 EditText input = (EditText)findViewById(R.id.input);
 
-                Log.i("mensaje",input.getText().toString());
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance().getReference().push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+//                Log.i("mensaje",input.getText().toString());
 
-                // Clear the input
-                input.setText("");
+                if(input.getText().toString().length() == 0) {
+                    Toast.makeText(getApplicationContext(),
+                            "Debe ingresar un mensaje",
+                            Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    // Read the input field and push a new instance
+                    // of ChatMessage to the Firebase database
+                    FirebaseDatabase.getInstance().getReference().push()
+                            .setValue(new ChatMessage(input.getText().toString(),
+                                    FirebaseAuth.getInstance()
+                                            .getCurrentUser()
+                                            .getDisplayName())
+                            );
+
+                    // Clear the input
+                    input.setText("");
+                }
             }
         });
 
@@ -96,14 +104,15 @@ public class ChatActivity extends AppCompatActivity{
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 //        listOfMessages.setAdapter(adapter);
 
-        listOfMessages.setAdapter(new ChatAdapter(this,arrayList));
+        adapter = new ChatAdapter(this,arrayList);
+        listOfMessages.setAdapter(adapter);
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 ChatMessage mensaje = dataSnapshot.getValue(ChatMessage.class);
                 arrayList.add(mensaje);
-//                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
 //                mensaje.setMessageText();
 
                 int taglog = Log.d("TAGLOG", mensaje.toString() + "");
