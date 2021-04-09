@@ -1,6 +1,7 @@
 package com.example.firebasechat;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -52,9 +54,19 @@ public class ChatAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 //        return null;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        Log.i("nombre",user.getDisplayName());
+        String nombreUsuarioActual = user.getDisplayName();
+
         Holder holder = new Holder();
         View fila;
-        fila = inflater.inflate(R.layout.message,null);
+        if(nombreUsuarioActual.equals(lista.get(position).getMessageUser())) {
+            fila = inflater.inflate(R.layout.message_right,null);
+        }
+        else {
+            fila = inflater.inflate(R.layout.message_left,null);
+        }
+
         holder.nombre = (TextView) fila.findViewById(R.id.message_user);
         holder.fechaHora = (TextView) fila.findViewById(R.id.message_time);
         holder.texto = (TextView) fila.findViewById(R.id.message_text);
