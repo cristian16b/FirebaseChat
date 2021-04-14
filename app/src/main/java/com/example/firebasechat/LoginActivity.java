@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        FirebaseAuth.getInstance().signOut();
 
         // [START config_signin]
         // Configure Google Sign In
@@ -201,9 +202,13 @@ public class LoginActivity extends AppCompatActivity  {
         startActivity(intent);
     }
 
-
     @Override
     public void onBackPressed() {
         // NO HACER NADA
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

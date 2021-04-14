@@ -145,7 +145,15 @@ public class ChatActivity extends AppCompatActivity{
     public void logOut(View view) {
         FirebaseAuth.getInstance().signOut();
         Intent i = new Intent(this, LoginActivity.class );
+
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         // Sign Out Google...
+    }
+    
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
     }
 }
