@@ -114,8 +114,9 @@ public class ChatActivity extends AppCompatActivity{
                 arrayList.add(mensaje);
                 adapter.notifyDataSetChanged();
 //                mensaje.setMessageText();
-
-                int taglog = Log.d("TAGLOG", mensaje.toString() + "");
+//                listview.setSelection(listview.getAdapter().getCount()-1);
+                listOfMessages.setSelection(listOfMessages.getAdapter().getCount()-1);
+//                int taglog = Log.d("TAGLOG", mensaje.toString() + "");
             }
 
             @Override
